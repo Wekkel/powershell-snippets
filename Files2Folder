@@ -1,0 +1,13 @@
+$SourceFolder = "[...]" #source folder holding files
+$TargetFolder = "[...]" #target folder where folders with files should be placed. Can be the same as Sourcefolder
+
+# Get files
+$files = Get-ChildItem -Path $SourceFolder
+
+# Loop through files and copy to folders
+$files | ForEach-Object {
+    #create directory
+    New-Item -Path $TargetFolder -Name $_.BaseName -ItemType "directory"
+    #move item to new directory
+    Move-Item -Path $_.FullName -Destination ($TargetFolder + "\" + $_.BaseName + "\" + $_.Name) #-WhatIf
+}
